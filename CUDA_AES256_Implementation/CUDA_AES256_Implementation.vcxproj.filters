@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CudaCompile Include="kernel.cu" />
+    <CudaCompile Include="cuda_aes256_kernel_processor.cu">
+      <Filter>CUDA_AES256\Definitions</Filter>
+    </CudaCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CUDA_AES256">
+      <UniqueIdentifier>{fb9da0c3-578b-409b-bc1f-6db3cad0503f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="CUDA_AES256\Definitions">
+      <UniqueIdentifier>{0e8c84c4-9758-4b3f-b661-8a618d85fdbe}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="cuda_aes256.cuh">
+      <Filter>CUDA_AES256</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="cuda_aes256_file_reader.cpp">
+      <Filter>CUDA_AES256\Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="cuda_aes256_file_writer.cpp">
+      <Filter>CUDA_AES256\Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="threadSafeDeque.cpp">
+      <Filter>CUDA_AES256\Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="threadSafeVector.cpp">
+      <Filter>CUDA_AES256\Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="AESBlock.cpp">
+      <Filter>CUDA_AES256\Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="cuda_aes256_error_t.cpp">
+      <Filter>CUDA_AES256\Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="cuda_aes256_manager.cpp">
+      <Filter>CUDA_AES256\Definitions</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
