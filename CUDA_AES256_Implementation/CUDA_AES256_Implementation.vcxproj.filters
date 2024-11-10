@@ -18,6 +18,9 @@
     <ClInclude Include="cuda_aes256.cuh">
       <Filter>CUDA_AES256</Filter>
     </ClInclude>
+    <ClInclude Include="threadSafeVector.ipp">
+      <Filter>CUDA_AES256\Definitions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cuda_aes256_file_reader.cpp">
@@ -26,20 +29,14 @@
     <ClCompile Include="cuda_aes256_file_writer.cpp">
       <Filter>CUDA_AES256\Definitions</Filter>
     </ClCompile>
-    <ClCompile Include="threadSafeDeque.cpp">
-      <Filter>CUDA_AES256\Definitions</Filter>
-    </ClCompile>
-    <ClCompile Include="threadSafeVector.cpp">
-      <Filter>CUDA_AES256\Definitions</Filter>
-    </ClCompile>
-    <ClCompile Include="AESBlock.cpp">
-      <Filter>CUDA_AES256\Definitions</Filter>
-    </ClCompile>
-    <ClCompile Include="cuda_aes256_error_t.cpp">
+    <ClCompile Include="threadSafeDeque.ipp">
       <Filter>CUDA_AES256\Definitions</Filter>
     </ClCompile>
     <ClCompile Include="cuda_aes256_manager.cpp">
       <Filter>CUDA_AES256\Definitions</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
 </Project>

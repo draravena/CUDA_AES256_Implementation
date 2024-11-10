@@ -79,6 +79,7 @@
     <CudaCompile>
       <TargetMachinePlatform>64</TargetMachinePlatform>
       <SplitCompile>ExtendedMaxThreads</SplitCompile>
+      <AdditionalOptions>--std=c++17 %(AdditionalOptions)</AdditionalOptions>
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -87,15 +88,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cuda_aes256.cuh" />
+    <ClInclude Include="threadSafeVector.ipp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AESBlock.cpp" />
-    <ClCompile Include="cuda_aes256_error_t.cpp" />
     <ClCompile Include="cuda_aes256_file_reader.cpp" />
     <ClCompile Include="cuda_aes256_file_writer.cpp" />
     <ClCompile Include="cuda_aes256_manager.cpp" />
-    <ClCompile Include="threadSafeDeque.cpp" />
-    <ClCompile Include="threadSafeVector.cpp" />
+    <ClCompile Include="threadSafeDeque.ipp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
