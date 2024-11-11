@@ -4,10 +4,6 @@
 
 namespace cuda_aes {
 	namespace file {
-		class CUDA_AES_FileWriter {
-			public:
-
-			private:
-		};
+		CUDA_AES_FileWriter::CUDA_AES_FileWriter() {}
 	};
 };

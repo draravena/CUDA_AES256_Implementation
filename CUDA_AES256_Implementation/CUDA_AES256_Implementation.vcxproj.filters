@@ -29,10 +29,13 @@
     <ClCompile Include="cuda_aes256_file_writer.cpp">
       <Filter>CUDA_AES256\Definitions</Filter>
     </ClCompile>
+    <ClCompile Include="cuda_aes256_manager.cpp">
+      <Filter>CUDA_AES256\Definitions</Filter>
+    </ClCompile>
     <ClCompile Include="threadSafeDeque.ipp">
       <Filter>CUDA_AES256\Definitions</Filter>
     </ClCompile>
-    <ClCompile Include="cuda_aes256_manager.cpp">
+    <ClCompile Include="cuda_aes_datatype.cpp">
       <Filter>CUDA_AES256\Definitions</Filter>
     </ClCompile>
   </ItemGroup>
