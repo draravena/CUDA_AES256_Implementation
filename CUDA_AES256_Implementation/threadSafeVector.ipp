@@ -31,6 +31,16 @@ namespace cuda_aes {
 			return true;
 		}
 		template <typename T>
+		bool ThreadSafeVector<T>::push_back(T&& item) {
+			LOCK_GUARD(mtx_);
+			if (vector_.size() >= maxSize_) {
+				return false;
+			}
+			vector_.push_back(std::move(item));
+			updateSize();
+			return true;
+		}
+		template <typename T>
 		bool ThreadSafeVector<T>::pop_back() {
 			LOCK_GUARD(mtx_);
 			if (vector_.empty()) {

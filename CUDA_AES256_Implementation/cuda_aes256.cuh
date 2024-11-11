@@ -2,9 +2,7 @@
 
 #ifndef _CUDA_AES256_CUH
 #define _CUDA_AES256_CUH
-
 #define LOCK_GUARD(mutex_) std::lock_guard<std::mutex> lock_mutex(mutex_)
-
 #include "cuda_runtime.h"
 #include "device_launch_parameters.h"
 
@@ -50,10 +48,11 @@ namespace cuda_aes {
 		class ThreadSafeDeque {
 		public:
 			ThreadSafeDeque();
-			ThreadSafeDeque(uint64_t);
-			void setMaxSize(uint64_t);	
-			//bool push_back(T&&);
-			bool push_back(T&);
+			ThreadSafeDeque(uint64_t maxSize);
+			void setMaxSize(uint64_t maxSize);	
+			bool push_back(T& item);
+			bool push_back(T&& item);
+			bool push_front(T& item);
 			bool push_front(T&& item);
 			std::optional<T&> front(bool erase = false);
 			std::optional<T&> back(bool erase = false);
@@ -79,7 +78,7 @@ namespace cuda_aes {
 			ThreadSafeVector(uint64_t maxSize);
 			ThreadSafeVector();
 			void setMaxSize(uint64_t maxSize);
-			//bool push_back(T&& item);
+			bool push_back(T&& item);
 			bool push_back(T& item);
 			bool pop_back();
 			std::optional<T> access(uint64_t index);
@@ -123,7 +122,7 @@ namespace cuda_aes {
 		class CUDA_AES_FileReader {
 			public:
 				CUDA_AES_FileReader();
-				CUDA_AES_FileReader(const std::string&, uint64_t, uint64_t);
+				CUDA_AES_FileReader(const std::string& fileDirectory, uint64_t maxByteBufferSize, uint64_t maxBlockBufferSize);
 				void start();
 				void halt();
 				void terminate();

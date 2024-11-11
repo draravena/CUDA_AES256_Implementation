@@ -19,7 +19,7 @@ namespace cuda_aes {
 			maxSize_ = maxSize;
 			deque_.clear();
 			updateSize();
-		}
+		}	
 		template <typename T>
 		bool ThreadSafeDeque<T>::push_back(T& item) {
 			LOCK_GUARD(mtx_);
@@ -27,6 +27,26 @@ namespace cuda_aes {
 				return false;
 			}
 			deque_.push_back(item);
+			updateSize();
+			return true;
+		}
+		template <typename T>
+		bool ThreadSafeDeque<T>::push_back(T&& item) {
+			LOCK_GUARD(mtx_);
+			if (deque_.size() >= maxSize_) {
+				return false;
+			}
+			deque_.push_back(std::move(item));
+			updateSize();
+			return true;
+		}
+		template <typename T>
+		bool ThreadSafeDeque<T>::push_front(T& item) {
+			LOCK_GUARD(mtx_);
+			if (deque_.size() >= maxSize_) {
+				return false;
+			}
+			deque_.push_front(item);
 			updateSize();
 			return true;
 		}
