@@ -52,7 +52,8 @@ namespace cuda_aes {
 			ThreadSafeDeque();
 			ThreadSafeDeque(uint64_t);
 			void setMaxSize(uint64_t);	
-			bool push_back(T&&);
+			//bool push_back(T&&);
+			bool push_back(T&);
 			bool push_front(T&& item);
 			std::optional<T&> front(bool erase = false);
 			std::optional<T&> back(bool erase = false);
@@ -78,7 +79,8 @@ namespace cuda_aes {
 			ThreadSafeVector(uint64_t maxSize);
 			ThreadSafeVector();
 			void setMaxSize(uint64_t maxSize);
-			bool push_back(T&& item);
+			//bool push_back(T&& item);
+			bool push_back(T& item);
 			bool pop_back();
 			std::optional<T> access(uint64_t index);
 			int64_t move(ThreadSafeVector& destination, bool explicitAll = true);
@@ -104,7 +106,7 @@ namespace cuda_aes {
 #include "threadSafeVector.ipp"
 namespace cuda_aes {
 	namespace datatype {
-		void convertToAESBlock(const char* buf, uint64_t size, datatype::ThreadSafeVector<datatype::cudaAESBlock_t>& blockBuffer);
+		void convertToAESBlock(char* buf, uint64_t size, uint64_t&, datatype::ThreadSafeVector<datatype::cudaAESBlock_t>& blockBuffer, std::deque<char>& byteBuffer);
 	}
 }
 
@@ -121,20 +123,24 @@ namespace cuda_aes {
 		class CUDA_AES_FileReader {
 			public:
 				CUDA_AES_FileReader();
-				CUDA_AES_FileReader(const std::string& fileDirectory, uint64_t maxBufferSize);
+				CUDA_AES_FileReader(const std::string&, uint64_t, uint64_t);
 				void start();
 				void halt();
 				void terminate();
-				// Flags
-				bool halted_ = false;
-				bool terminated_ = false;
-				bool fileDidNotOpen_ = true;
-				uint64_t failedConversions_ = 0;
+				uint64_t size();
+				bool openFailed();
+				bool terminated();
+				bool halted();
+				uint64_t failedConversions();
+				void test() {
+					byteBuffer_.push_back(2);
+				}
 			private:
 				// Buffers
-				datatype::ThreadSafeDeque<char> byteBuffer_;
+				std::deque<char> byteBuffer_;
 				datatype::ThreadSafeVector<datatype::cudaAESBlock_t> block_buffer_;
-				uint64_t maxBufferSize_ = 0;
+				uint64_t maxByteBufferSize_ = 0;
+				uint64_t maxBlockBufferSize_ = 0;
 				// Threads
 				std::mutex mtx_;
 				std::condition_variable cv_;
@@ -142,9 +148,14 @@ namespace cuda_aes {
 				// File
 				std::fstream file_;
 				uint64_t currentPositionInFile_ = 0;
-				uint64_t currentBlocksIndex_ = 0;
+				uint64_t currentBlockIndex_ = 0;
 				uint64_t fileSize_ = 0;
-				const std::string* fileDirectory_;			
+				std::string fileDirectory_;		
+				// Flags
+				bool halted_ = false;
+				bool terminated_ = false;
+				bool fileDidNotOpen_ = false;
+				uint64_t failedConversions_ = 0;
 		};
 		class CUDA_AES_FileWriter {
 			public:
