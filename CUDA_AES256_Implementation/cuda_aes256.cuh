@@ -132,9 +132,6 @@ namespace cuda_aes {
 				bool terminated();
 				bool halted();
 				uint64_t failedConversions();
-				void test() {
-					byteBuffer_.push_back(2);
-				}
 			private:
 				// Buffers
 				std::deque<char> byteBuffer_;
