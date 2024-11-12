@@ -9,7 +9,7 @@ using namespace cuda_aes;
 using namespace cuda_aes::file;
 
 int main() {
-	std::string txt = "test.txt";
+	std::string txt = "test.dtxt";
 	CUDA_AES_FileReader reader(txt, 10, 10);
 	reader.start();
 	return 0;

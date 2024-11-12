@@ -19,12 +19,14 @@ namespace cuda_aes {
 			byteBuffer_.clear();
 		}
 		void CUDA_AES_FileReader::start() {
-			//readerThread_ = std::thread([&] {
-				file_ = std::fstream(fileDirectory_, std::ios::binary | std::ios::ate | std::ios::out | std::ios::in);	
-				if (!file_.is_open()) {						// Check if file opened
-					fileDidNotOpen_ = true;
-					return;
-				}
+			file_ = std::fstream(fileDirectory_, std::ios::binary | std::ios::ate | std::ios::out | std::ios::in);
+			if (!file_.is_open()) {
+				fileDidNotOpen_ = true;
+				return;
+			}
+			readerThread_ = std::thread([&] {
+				
+				
 				fileDidNotOpen_ = false;
 				fileSize_ = file_.tellg();
 				file_.seekg(0);
@@ -37,8 +39,8 @@ namespace cuda_aes {
 					currentPositionInFile_ += remaining;
 					datatype::convertToAESBlock(buffer, remaining, currentBlockIndex_, block_buffer_, byteBuffer_);
 				}
-			//});
-			//readerThread_.join();
+			});
+			readerThread_.detach();
 		}	
 		uint64_t CUDA_AES_FileReader::size() {
 			return fileSize_;

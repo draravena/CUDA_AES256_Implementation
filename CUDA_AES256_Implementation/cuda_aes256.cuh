@@ -111,13 +111,8 @@ namespace cuda_aes {
 
 
 namespace cuda_aes {
-	
-	class CUDA_AES_Manager;
-	namespace control {
-	}
-	namespace cuda_kernel {
-		class CUDA_AES_Kernel_Processor;
-	};
+	extern bool RUNTIME_ERRORS_HALTS_PROGRAM;
+	namespace control {}
 	namespace file {
 		class CUDA_AES_FileReader {
 			public:
@@ -132,6 +127,10 @@ namespace cuda_aes {
 				bool halted();
 				uint64_t failedConversions();
 			private:
+				// Parent Manager
+				std::shared_ptr<CUDA_AES_Processor> parent_;
+				// Thread Task
+				void task();
 				// Buffers
 				std::deque<char> byteBuffer_;
 				datatype::ThreadSafeVector<datatype::cudaAESBlock_t> block_buffer_;
@@ -157,7 +156,24 @@ namespace cuda_aes {
 			public:
 				CUDA_AES_FileWriter();
 			private:
+				// Parent Manager
+				std::shared_ptr<CUDA_AES_Processor> parent_;
+				// Thread
+				std::thread writerThread;
 		};
+	};
+	class CUDA_AES_Processor {
+	public:
+		CUDA_AES_Processor();
+		// Attempt to cleanly break out/stop threads
+		static void stopAll();
+		// Strict, stops all operations immediately
+		static void terminateAll();
+	private:
+		bool terminateFlag_ = false;
+		file::CUDA_AES_FileReader reader_;
+		file::CUDA_AES_FileWriter writer_;
+		static std::vector<
 	};
 	namespace system {
 		uint64_t getFreeRAM();
