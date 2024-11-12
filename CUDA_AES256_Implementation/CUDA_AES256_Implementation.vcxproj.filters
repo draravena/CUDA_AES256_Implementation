@@ -2,9 +2,6 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <CudaCompile Include="kernel.cu" />
-    <CudaCompile Include="cuda_aes256_kernel_processor.cu">
-      <Filter>CUDA_AES256\Definitions</Filter>
-    </CudaCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="CUDA_AES256">
@@ -29,7 +26,7 @@
     <ClCompile Include="cuda_aes256_file_writer.cpp">
       <Filter>CUDA_AES256\Definitions</Filter>
     </ClCompile>
-    <ClCompile Include="cuda_aes256_manager.cpp">
+    <ClCompile Include="cuda_aes256_processor.cu">
       <Filter>CUDA_AES256\Definitions</Filter>
     </ClCompile>
     <ClCompile Include="threadSafeDeque.ipp">

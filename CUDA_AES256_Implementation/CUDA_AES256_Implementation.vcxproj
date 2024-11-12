@@ -83,7 +83,6 @@
     </CudaCompile>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CudaCompile Include="cuda_aes256_kernel_processor.cu" />
     <CudaCompile Include="kernel.cu" />
   </ItemGroup>
   <ItemGroup>
@@ -93,7 +92,7 @@
   <ItemGroup>
     <ClCompile Include="cuda_aes256_file_reader.cpp" />
     <ClCompile Include="cuda_aes256_file_writer.cpp" />
-    <ClCompile Include="cuda_aes256_manager.cpp" />
+    <ClCompile Include="cuda_aes256_processor.cu" />
     <ClCompile Include="cuda_aes_datatype.cpp" />
     <ClCompile Include="threadSafeDeque.ipp" />
   </ItemGroup>
