@@ -112,6 +112,7 @@ namespace cuda_aes {
 
 namespace cuda_aes {
 	extern bool RUNTIME_ERRORS_HALTS_PROGRAM;
+	class CUDA_AES_Processor;
 	namespace control {}
 	namespace file {
 		class CUDA_AES_FileReader {
@@ -173,7 +174,6 @@ namespace cuda_aes {
 		bool terminateFlag_ = false;
 		file::CUDA_AES_FileReader reader_;
 		file::CUDA_AES_FileWriter writer_;
-		static std::vector<
 	};
 	namespace system {
 		uint64_t getFreeRAM();
