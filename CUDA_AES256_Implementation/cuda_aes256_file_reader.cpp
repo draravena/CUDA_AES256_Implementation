@@ -37,7 +37,7 @@ namespace cuda_aes {
 					char* buffer = (char*)malloc(remaining);
 					file_.read(buffer, remaining);
 					currentPositionInFile_ += remaining;
-					datatype::convertToAESBlock(buffer, remaining, currentBlockIndex_, block_buffer_, byteBuffer_);
+					cuda_datatype::convertToAESBlock(buffer, remaining, currentBlockIndex_, block_buffer_, byteBuffer_);
 				}
 			});
 			readerThread_.detach();

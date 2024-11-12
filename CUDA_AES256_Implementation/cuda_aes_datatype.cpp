@@ -5,8 +5,8 @@
 
 
 namespace cuda_aes {
-	namespace datatype {
-		void convertToAESBlock(char* buf, uint64_t size, uint64_t& blockIndex, ThreadSafeVector<cudaAESBlock_t>& blockBuffer, std::deque<char>& byteBuffer) {
+	namespace cuda_datatype {
+		void convertToAESBlock(char* buf, uint64_t size, uint64_t& blockIndex, datatype::ThreadSafeVector<cudaAESBlock_t>& blockBuffer, std::deque<char>& byteBuffer) {
 			if (size < 16) {
 				for (uint64_t i = 0; i < size; i++) {
 					byteBuffer.push_back(buf[i]);
@@ -14,9 +14,9 @@ namespace cuda_aes {
 				return;
 			}
 			for (uint64_t i = 0; i < size / 16; i++) {
-				datatype::cudaAESBlock_t block;
+				cudaAESBlock_t block;
 				block.locationInFile = blockIndex;
-				block.size = datatype::maxAESBlockSize;
+				block.size = maxAESBlockSize;
 				blockIndex++;
 				uint8_t row = 0, col = 0;
 				for (int64_t j = 0; j < 16; j++) {
