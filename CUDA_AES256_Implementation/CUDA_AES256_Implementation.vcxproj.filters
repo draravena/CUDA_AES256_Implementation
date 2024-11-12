@@ -10,15 +10,26 @@
     <Filter Include="CUDA_AES256\Definitions">
       <UniqueIdentifier>{0e8c84c4-9758-4b3f-b661-8a618d85fdbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ThreadSafeDatatypes">
+      <UniqueIdentifier>{d42148f2-fd29-490c-97c6-0e3538c09135}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ThreadPool">
+      <UniqueIdentifier>{310a0453-290d-42e9-a978-e839c9035097}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cuda_aes256.cuh">
       <Filter>CUDA_AES256</Filter>
     </ClInclude>
-    <ClInclude Include="threadSafeVector.ipp">
-      <Filter>CUDA_AES256\Definitions</Filter>
+    <ClInclude Include="threadSafeDatatypes.hpp">
+      <Filter>ThreadSafeDatatypes</Filter>
     </ClInclude>
-    <ClInclude Include="ThreadPool.cuh" />
+    <ClInclude Include="threadSafeVector.ipp">
+      <Filter>ThreadSafeDatatypes</Filter>
+    </ClInclude>
+    <ClInclude Include="ThreadPool.cuh">
+      <Filter>ThreadPool</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cuda_aes256_file_reader.cpp">
@@ -30,11 +41,11 @@
     <ClCompile Include="cuda_aes256_processor.cu">
       <Filter>CUDA_AES256\Definitions</Filter>
     </ClCompile>
-    <ClCompile Include="threadSafeDeque.ipp">
-      <Filter>CUDA_AES256\Definitions</Filter>
-    </ClCompile>
     <ClCompile Include="cuda_aes_datatype.cpp">
       <Filter>CUDA_AES256\Definitions</Filter>
+    </ClCompile>
+    <ClCompile Include="threadSafeDeque.ipp">
+      <Filter>ThreadSafeDatatypes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
