@@ -87,6 +87,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cuda_aes256.cuh" />
+    <ClInclude Include="ThreadPool.cuh" />
     <ClInclude Include="threadSafeVector.ipp" />
   </ItemGroup>
   <ItemGroup>

@@ -18,6 +18,7 @@
     <ClInclude Include="threadSafeVector.ipp">
       <Filter>CUDA_AES256\Definitions</Filter>
     </ClInclude>
+    <ClInclude Include="ThreadPool.cuh" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cuda_aes256_file_reader.cpp">
