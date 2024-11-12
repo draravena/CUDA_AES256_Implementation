@@ -20,8 +20,10 @@
 #include <bitset>
 #include <fstream>
 
+#include "threadSafeDatatypes.hpp"
+
 namespace cuda_aes {
-	namespace datatype {
+	namespace cuda_datatype {
 		/*
 		*	CONSTANTS
 		*/
@@ -44,68 +46,14 @@ namespace cuda_aes {
 		/*
 		*	CLASSES
 		*/
-		template <typename T>
-		class ThreadSafeDeque {
-		public:
-			ThreadSafeDeque();
-			ThreadSafeDeque(uint64_t maxSize);
-			void setMaxSize(uint64_t maxSize);	
-			bool push_back(T& item);
-			bool push_back(T&& item);
-			bool push_front(T& item);
-			bool push_front(T&& item);
-			std::optional<T&> front(bool erase = false);
-			std::optional<T&> back(bool erase = false);
-			bool pop_back();
-			bool pop_front();
-			// possibly not thread-safe?? fix next time
-			std::mutex& mtx();
-			std::deque<T>& deque();
-			uint64_t size();
-			uint64_t maxSize();
-			uint64_t remaining();
-		private:
-			void updateSize();
-			uint64_t maxSize_;
-			std::atomic<uint64_t> size_;
-			std::deque<T> deque_;
-			std::mutex mtx_;
-		};
-
-		template <typename T>
-		class ThreadSafeVector {
-		public:
-			ThreadSafeVector(uint64_t maxSize);
-			ThreadSafeVector();
-			void setMaxSize(uint64_t maxSize);
-			bool push_back(T&& item);
-			bool push_back(T& item);
-			bool pop_back();
-			std::optional<T> access(uint64_t index);
-			int64_t move(ThreadSafeVector& destination, bool explicitAll = true);
-			// possibly not thread-safe?? fix next time
-			std::mutex& mtx();
-			std::vector<T>& vec();
-			uint64_t size();
-			uint64_t maxSize();
-			uint64_t remaining();
-		private:
-			void updateSize();
-			uint64_t maxSize_;
-			std::atomic<uint64_t> size_;
-			std::vector<T> vector_;
-			std::mutex mtx_;
-
-		};
-		
 		
 	};
 }
 #include "threadSafeDeque.ipp"
 #include "threadSafeVector.ipp"
 namespace cuda_aes {
-	namespace datatype {
-		void convertToAESBlock(char* buf, uint64_t size, uint64_t&, datatype::ThreadSafeVector<datatype::cudaAESBlock_t>& blockBuffer, std::deque<char>& byteBuffer);
+	namespace cuda_datatype {
+		void convertToAESBlock(char* buf, uint64_t size, uint64_t&, datatype::ThreadSafeVector<cuda_datatype::cudaAESBlock_t>& blockBuffer, std::deque<char>& byteBuffer);
 	}
 }
 
@@ -134,7 +82,7 @@ namespace cuda_aes {
 				void task();
 				// Buffers
 				std::deque<char> byteBuffer_;
-				datatype::ThreadSafeVector<datatype::cudaAESBlock_t> block_buffer_;
+				datatype::ThreadSafeVector<cuda_datatype::cudaAESBlock_t> block_buffer_;
 				uint64_t maxByteBufferSize_ = 0;
 				uint64_t maxBlockBufferSize_ = 0;
 				// Threads
