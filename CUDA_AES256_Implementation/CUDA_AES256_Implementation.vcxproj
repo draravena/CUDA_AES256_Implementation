@@ -68,6 +68,10 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;WIN64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
+      <EnableFiberSafeOptimizations>true</EnableFiberSafeOptimizations>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -88,7 +92,9 @@
   <ItemGroup>
     <ClInclude Include="cuda_aes256.cuh" />
     <ClInclude Include="ThreadPool.cuh" />
-    <ClInclude Include="threadSafeDatatypes.hpp" />
+    <ClInclude Include="threadSafeSet.hpp" />
+    <ClInclude Include="threadSafeDeque.hpp" />
+    <ClInclude Include="threadSafeVector.hpp" />
     <ClInclude Include="threadSafeVector.ipp" />
   </ItemGroup>
   <ItemGroup>
@@ -97,6 +103,7 @@
     <ClCompile Include="cuda_aes256_processor.cu" />
     <ClCompile Include="cuda_aes_datatype.cpp" />
     <ClCompile Include="threadSafeDeque.ipp" />
+    <ClCompile Include="threadSafeSet.ipp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
