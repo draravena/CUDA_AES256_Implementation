@@ -39,11 +39,14 @@ namespace thread {
                 }
             }
             void start() {
-                RUNNING = true;
+                OPERATIONAL = true;
+            }
+            void stop() {
+                OPERATIONAL = false;
             }
             void enqueue(Task t) {
             }
-            bool RUNNING = false;
+            bool OPERATIONAL = false;
         private:
             void processingFunction() {
                 std::condition_variable cv;
@@ -51,8 +54,9 @@ namespace thread {
                 while (true) {
                     std::unique_lock<std::mutex> lock(mtx);
                     cv.wait(lock, [&] {
-                        return true;
+                        return !OPERATIONAL;
                     });
+                    if (OPERATIONAL == true)
                     freeThreads_.insert(std::this_thread::get_id());
                 }
             }
