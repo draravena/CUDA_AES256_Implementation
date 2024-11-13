@@ -20,7 +20,9 @@
 #include <bitset>
 #include <fstream>
 
-#include "threadSafeDatatypes.hpp"
+#include "threadSafeDeque.hpp"
+#include "threadSafeVector.hpp"
+#include "threadSafeSet.hpp"
 
 namespace cuda_aes {
 	namespace cuda_datatype {
