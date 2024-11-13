@@ -1,7 +1,5 @@
 #pragma once
-#ifndef _THREAD_SAFE_DEQUE_HPP
-#define _THREAD_SAFE_DEQUE_HPP
-#include "threadSafeDatatypes.hpp"
+#include "threadSafeDeque.hpp"
 
 namespace datatype {
 	template <typename T>
@@ -127,5 +125,3 @@ namespace datatype {
 		size_ = deque_.size();
 	}
 };
-
-#endif

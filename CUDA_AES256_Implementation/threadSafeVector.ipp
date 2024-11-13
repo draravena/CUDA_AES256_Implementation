@@ -1,28 +1,31 @@
 #pragma once
-#ifndef _THREAD_SAFE_VECTOR_HPP
-#define _THREAD_SAFE_VECTOR_HPP
-#include "threadSafeDatatypes.hpp"
+#include "threadSafeVector.hpp"
+
+#include <iostream>
 
 namespace datatype {
 	template <typename T>
-	ThreadSafeVector<T>::ThreadSafeVector(uint64_t maxSize) {
+	ThreadSafeVector<T>::ThreadSafeVector(uint64_t maxSize, uint64_t elementsPerMutex) {
 		maxSize_ = maxSize;
 		vector_.reserve(maxSize);
 		vector_.clear();
 		updateSize();
+		elementsPerMutex_ = elementsPerMutex;
+		updateMutexMap();
 	}
 	template <typename T>
 	ThreadSafeVector<T>::ThreadSafeVector() {}
 	template <typename T>
-	void ThreadSafeVector<T>::setMaxSize(uint64_t maxSize) {
+	void ThreadSafeVector<T>::setMaxSize(uint64_t maxSize, uint64_t elementsPerMutex) {
 		maxSize_ = maxSize;
 		vector_.reserve(maxSize);
 		vector_.clear();
 		updateSize();
+		elementsPerMutex_ = elementsPerMutex;
 	}
 	template <typename T>
 	bool ThreadSafeVector<T>::push_back(T& item) {
-		LOCK_GUARD(mtx_);
+		LOCK_GUARD(*mutex_map_[size_ + 1 / elementsPerMutex_]);
 		if (vector_.size() >= maxSize_) {
 			return false;
 		}
@@ -32,7 +35,7 @@ namespace datatype {
 	}
 	template <typename T>
 	bool ThreadSafeVector<T>::push_back(T&& item) {
-		LOCK_GUARD(mtx_);
+		LOCK_GUARD(*mutex_map_[size_ + 1 / elementsPerMutex_]);
 		if (vector_.size() >= maxSize_) {
 			return false;
 		}
@@ -42,7 +45,7 @@ namespace datatype {
 	}
 	template <typename T>
 	bool ThreadSafeVector<T>::pop_back() {
-		LOCK_GUARD(mtx_);
+		LOCK_GUARD(*mutex_map_[size_ - 1 / elementsPerMutex_]);
 		if (vector_.empty()) {
 			return false;
 		}
@@ -52,18 +55,37 @@ namespace datatype {
 	}
 	template <typename T>
 	std::optional<T> ThreadSafeVector<T>::access(uint64_t index) {
-		LOCK_GUARD(mtx_);
 		if (index >= vector_.size()) {
 			return std::nullopt;
 		}
-		else {
-			return vector_[index];
+		LOCK_GUARD(*mutex_map_[index / elementsPerMutex_]);
+		return vector_[index];
+	}
+	template <typename T>
+	bool ThreadSafeVector<T>::set(uint64_t index, T& val) {
+		if (index >= vector_.size()) {
+			return false;
 		}
+		LOCK_GUARD(*mutex_map_[index / elementsPerMutex_]);
+		vector_[index] = val;
+		return true;
+	}
+	template <typename T>
+	bool ThreadSafeVector<T>::set(uint64_t index, T&& val) {
+		if (index >= maxSize_) {
+			return false;
+		}
+		LOCK_GUARD(*mutex_map_[index / elementsPerMutex_]);
+		std::cout << "g";
+		vector_[index] = val;
+		std::cout << vector_.size();
+		updateSize();
+		return true;
 	}
 	template <typename T>
 	int64_t ThreadSafeVector<T>::move(ThreadSafeVector& destination, bool explicitAll) {
 		std::lock_guard<std::mutex> lock1(destination.mtx());
-		std::lock_guard<std::mutex> lock2(mtx_);
+		std::lock_guard<std::mutex> lock2(globalmtx_);
 		uint64_t dest_remaining = destination.remaining();
 		if (dest_remaining < vector_.size() && explicitAll == true) {
 			return -1;
@@ -81,11 +103,14 @@ namespace datatype {
 		updateSize();
 		return 1;
 	}
-	// possibly not thread-safe?? fix next time
 	template <typename T>
-	std::mutex& ThreadSafeVector<T>::mtx() {
-		return mtx_;
+	void ThreadSafeVector<T>::updateMutexMap() {
+		for (uint64_t i = 0; i < maxSize_ / elementsPerMutex_; i++) {
+			std::shared_ptr<std::mutex> shared_mtx = std::make_shared<std::mutex>();
+			mutex_map_[i] = std::move(shared_mtx);
+		}
 	}
+	// possibly not thread-safe?? fix next time
 	template <typename T>
 	std::vector<T>& ThreadSafeVector<T>::vec() {
 		return vector_;
@@ -106,7 +131,9 @@ namespace datatype {
 	void ThreadSafeVector<T>::updateSize() {
 		size_ = vector_.size();
 	}
+	template <typename T>
+	std::mutex& ThreadSafeVector<T>::mtx() {
+		return globalmtx_;
+	}
 
 };
-
-#endif
