@@ -10,20 +10,8 @@
     <Filter Include="CUDA_AES256\Definitions">
       <UniqueIdentifier>{0e8c84c4-9758-4b3f-b661-8a618d85fdbe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="ThreadSafeDatatypes">
-      <UniqueIdentifier>{d42148f2-fd29-490c-97c6-0e3538c09135}</UniqueIdentifier>
-    </Filter>
     <Filter Include="ThreadPool">
       <UniqueIdentifier>{310a0453-290d-42e9-a978-e839c9035097}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ThreadSafeDatatypes\Vector">
-      <UniqueIdentifier>{2687c129-acb9-4ba6-a870-6a16a505b85e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ThreadSafeDatatypes\Deque">
-      <UniqueIdentifier>{2699c58d-0af9-436f-b1a9-4c62133b6b0b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ThreadSafeDatatypes\Set">
-      <UniqueIdentifier>{20443e6e-0f6f-4c51-bdc3-af40f3314f38}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -32,18 +20,6 @@
     </ClInclude>
     <ClInclude Include="ThreadPool.cuh">
       <Filter>ThreadPool</Filter>
-    </ClInclude>
-    <ClInclude Include="threadSafeVector.ipp">
-      <Filter>ThreadSafeDatatypes\Vector</Filter>
-    </ClInclude>
-    <ClInclude Include="threadSafeVector.hpp">
-      <Filter>ThreadSafeDatatypes\Vector</Filter>
-    </ClInclude>
-    <ClInclude Include="threadSafeDeque.hpp">
-      <Filter>ThreadSafeDatatypes\Deque</Filter>
-    </ClInclude>
-    <ClInclude Include="threadSafeSet.hpp">
-      <Filter>ThreadSafeDatatypes\Set</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -58,12 +34,6 @@
     </ClCompile>
     <ClCompile Include="cuda_aes_datatype.cpp">
       <Filter>CUDA_AES256\Definitions</Filter>
-    </ClCompile>
-    <ClCompile Include="threadSafeDeque.ipp">
-      <Filter>ThreadSafeDatatypes\Deque</Filter>
-    </ClCompile>
-    <ClCompile Include="threadSafeSet.ipp">
-      <Filter>ThreadSafeDatatypes\Set</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

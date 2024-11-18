@@ -92,18 +92,12 @@
   <ItemGroup>
     <ClInclude Include="cuda_aes256.cuh" />
     <ClInclude Include="ThreadPool.cuh" />
-    <ClInclude Include="threadSafeSet.hpp" />
-    <ClInclude Include="threadSafeDeque.hpp" />
-    <ClInclude Include="threadSafeVector.hpp" />
-    <ClInclude Include="threadSafeVector.ipp" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="cuda_aes256_file_reader.cpp" />
     <ClCompile Include="cuda_aes256_file_writer.cpp" />
     <ClCompile Include="cuda_aes256_processor.cu" />
     <ClCompile Include="cuda_aes_datatype.cpp" />
-    <ClCompile Include="threadSafeDeque.ipp" />
-    <ClCompile Include="threadSafeSet.ipp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="cpp.hint" />
